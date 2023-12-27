@@ -1,11 +1,26 @@
 import asyncio
+import logging
 
 from aiogram import Bot, Dispatcher
 from keyboards.set_menu import set_main_menu
 from config.config import Config, load_config
 from handlers import admin_handlers, user_handlers, private_user_handlers
 
+# Инициализация логгера
+logger = logging.getLogger(__name__)
+
+
 async def main() -> None:
+    # Конфигурация логирования
+    logging.basicConfig(
+        level=logging.INFO,
+        format='%(filename)s:%(lineno)d #%(levelname)-8s'
+               '[%(asctime)s] - %(name)s - %(message)s'
+    )
+
+    logger.info('Starting bot')
+
+
     config: Config = load_config()
 
     bot = Bot(token=config.tg_bot.token)
